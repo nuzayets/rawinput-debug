@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dummy_window.cpp" />
+    <ClCompile Include="rawinput.cpp" />
+    <ClCompile Include="timer.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="device_props.cpp" />
+    <ClCompile Include="directinput.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="dummy_window.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="rawinput.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="device_props.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="directinput.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{0f09d0b0-d6ce-4c0f-92b7-d422e2420ef9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
