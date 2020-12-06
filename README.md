@@ -1,7 +1,9 @@
 # rawinput-debug
 Win32 console application for demonstrating an issue with raw input and system idle state
 
-# Background
+# Fixing a 3+ year old bug in NVIDIA GeForce Experience
+
+## Background
 
 A few months ago, I thought I ought to try Microsoft Flight Simulator 2020. [The facsimile of our planet](https://www.youtube.com/watch?v=0w7q1ZFfsxs) that Asobo had created with photogrammetry and machine learning seemed like a good place to relax, *["in these trying times."](https://www.powerthesaurus.org/in_these_trying_times/synonyms)* I plugged in my trusty Logitech Freedom 2.4 wireless joystick and took to the skies.
 
@@ -20,7 +22,7 @@ I had an idea, though. I had previously contributed to a project called [procras
 
 Not so fast.
 
-# Enter NVIDIA
+## Enter NVIDIA
 
 I'd made a few upgrades to my computer in the months since, which included getting a better joystick, and a throttle, and some flight rudder pedals. Windows still wasn't letting the display sleep with them plugged in, but I decided I should look into the issue more. Looking at the USB Game Controllers control panel with the new joystick plugged in, I noticed absolutely no drift. No analog instability. No spurious inputs. It certainly wasn't the device's activity keeping the machine awake, I was sure of that now.
 
@@ -72,7 +74,7 @@ Theoretically you can use it to throw a key in the registry that tells Windows t
 
 Luckily, we have [Ghidra](https://ghidra-sre.org/). I did the same silly thing that I did in the debugger, I loaded up the most obvious executable (`NVIDIA Share.exe`) and asked the most obvious question. 
 
-# "Y'all got any input stuff 'round here?"
+## "Y'all got any input stuff 'round here?"
 
 ![image](https://user-images.githubusercontent.com/1832518/101274720-62e46e80-376e-11eb-9112-cf4ff35464e6.png)
 
@@ -100,7 +102,14 @@ It's registering its window handle to receive raw events from the keyboard at al
 
 I was able to replicate the issue. 
 
-### Enabling raw input either as a system-wide input sink (`dwFlags = RIDEV_INPUTSINK 0x100`) or only on foreground focus (`default, dwFlags = 0x0`) causes devices to flood the `HWND`'s message queue with [`WM_INPUT`](https://docs.microsoft.com/en-us/windows/win32/inputdev/wm-input)s, and prevents the system from becoming idle. My suggestion to Microsoft would be to make this clearer in the documentation, and to have an application requesting raw input show up in `powercfg /requests` and in [`WPA`](https://docs.microsoft.com/en-us/windows-hardware/test/wpt/windows-performance-analyzer). The application I wrote to demonstrate the issue is available in this repo: <https://github.com/nuzayets/rawinput-debug/>
+### Enabling Raw Input for joysticks causes devices to flood the `HWND`'s message queue with [`WM_INPUT`](https://docs.microsoft.com/en-us/windows/win32/inputdev/wm-input) events, and prevents the system from becoming idle. 
+
+My suggestions to Microsoft:
+
+- make this clearer in the documentation
+- an application requesting raw input should show up in `powercfg /requests` and in [WPA](https://docs.microsoft.com/en-us/windows-hardware/test/wpt/windows-performance-analyzer).
+
+The application I wrote to demonstrate the issue is available in this repo: https://github.com/nuzayets/rawinput-debug/
 
 But NVIDIA Share wasn't asking for raw input from the joystick. 
 
@@ -127,3 +136,9 @@ The file is `C:\Program Files\NVIDIA Corporation\NVIDIA GeForce Experience\libce
 I spent two days on this, and it ended up being one byte in the end. At least now my computer can sleep.
 
 ![image](https://user-images.githubusercontent.com/1832518/101274776-cb335000-376e-11eb-9b96-bb4261227a43.png)
+
+## How to fix it on your machine
+
+If you don't want to try using a hex editor, [this Powershell script](patch_libcef.ps1) will do it for you. 
+
+Please disable the overlay first, and make sure Powershell is run as Administrator so you are able to write to the directory.
