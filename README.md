@@ -3,7 +3,7 @@ Win32 console application for demonstrating an issue with raw input and system i
 
 It's a VS2017 project configured to build against [Windows SDK](https://developer.microsoft.com/en-us/windows/downloads/windows-10-sdk/) `10.0.19041.0` but you can use a different one if you change the target platform in the project settings. 
 
-It's quickly thrown together and isn't intended to demonstrate best practices. It can be used to determine if various input modes are causing a Human Interface Device or USB Game Controller are preventing your system from sleeping.
+It's quickly thrown together and isn't intended to demonstrate best practices. It can be used to determine if various input modes are causing a Human Interface Device or USB Game Controller to prevent your system from sleeping.
 
 # [patch_libcef.ps1](patch_libcef.ps1)
 A Powershell script to patch `libcef.dll` in the NVIDIA GeForce Experience distribution. It will be updated until NVIDIA fixes the issue.
@@ -108,7 +108,7 @@ It's registering its window handle to receive raw events from the keyboard at al
 
 I was able to replicate the issue. 
 
-### Enabling Raw Input for joysticks causes devices to flood the `HWND`'s message queue with [`WM_INPUT`](https://docs.microsoft.com/en-us/windows/win32/inputdev/wm-input) events, and prevents the system from becoming idle. 
+### Enabling Raw Input for joysticks causes devices to prevent the system from becoming idle. 
 
 My suggestions to Microsoft:
 
@@ -117,7 +117,7 @@ My suggestions to Microsoft:
 
 The application I wrote to demonstrate the issue is available in this repo: https://github.com/nuzayets/rawinput-debug/
 
-But NVIDIA Share wasn't asking for raw input from the joystick. 
+### But NVIDIA Share wasn't asking for raw input from the joystick. 
 
 Not directly, anyhow. NVIDIA Share is partially built upon [CEF, Chromium Embedded Framework](https://en.wikipedia.org/wiki/Chromium_Embedded_Framework). Why be happy with only wrapping your head around esoteric desktop development when you can throw frustrating web development into the mix? The more the merrier, I say. We didn't need that RAM anyway.
 
