@@ -80,9 +80,8 @@ Luckily, we have [Ghidra](https://ghidra-sre.org/). I did the same silly thing t
 
 This was immediately promising! But first, I had to do some reading. Raw input isn't something that I'm familiar with. Back in the good old days, there was DirectInput. DirectInput let you do force feedback, DirctInput let you have tons of buttons and axes, and at least on Windows it made using games controllers generally a smoother experience than it had been in the past, where games needed to support your particular controller (or your controller's drivers needed to emulate another, more popular controller). After DirectInput came Xinput, and Xinput is very much built around the Xbox Controller. You don't get any more buttons or axes than an Xbox Controller can have. You can't connect more controllers than an Xbox would be able to connect. It "just works", but it's not the kind of API that supports uses like this: 
 
-![image](https://user-images.githubusercontent.com/1832518/101274723-6aa41300-376e-11eb-9c12-86ddf57fc82e.png)
-
-The photo is not mine.
+![image](https://user-images.githubusercontent.com/1832518/101274723-6aa41300-376e-11eb-9c12-86ddf57fc82e.png)  
+*The photo is not mine.*
 
 Now that heavyweight API is raw input. Anything that conforms to the [Human Interface Device](https://en.wikipedia.org/wiki/Human_interface_device) standard will have its events passed through, and your role as an application developer is to support the [HID usage pages](https://usb.org/sites/default/files/hut1_21_0.pdf) that you deem appropriate. I especially like that in the middle of the Simulations Control page (`0x02`) is the usage ID for Magic Carpet Simulation (`0x0B`). Standards committees think of everything.
 
@@ -125,7 +124,8 @@ They request raw input as part of their gamepad driver, which makes sense. They 
 
 If you don't speak decompliation-ese, here's a rough translation:
 
-![image](https://user-images.githubusercontent.com/1832518/101274763-b1920880-376e-11eb-9183-ffaece3a115b.png)
+![image](https://user-images.githubusercontent.com/1832518/101274763-b1920880-376e-11eb-9183-ffaece3a115b.png)  
+_Update: As a commenter has pointed out, there is a typo: the `pRawInputDevices[0]` in the loop should be `pRawInputDevices[i]`. [Here](https://source.chromium.org/chromium/chromium/src/+/master:device/gamepad/raw_input_data_fetcher_win.cc;l=48;drc=776c4b650f0fde01c0ba718a115704f5c16adf98) is the actual source in Chromium._
 
 Luckily there wasn't any code patching to do. The values for the usage IDs live in the `.rdata` section of the executable (that `DAT_1861e16e8` in Ghidra's decompilation).
 
