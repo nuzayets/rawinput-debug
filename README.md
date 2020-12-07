@@ -1,9 +1,16 @@
 # rawinput-debug
-Win32 console application for demonstrating an issue with raw input and system idle state
+Win32 console application for demonstrating an issue with raw input and system idle state. 
 
-# Fixing a 3+ year old bug in NVIDIA GeForce Experience
+It's a VS2017 project configured to build against [Windows SDK](https://developer.microsoft.com/en-us/windows/downloads/windows-10-sdk/) `10.0.19041.0` but you can use a different one if you change the target platform in the project settings. 
 
-## Background
+It's quickly thrown together and isn't intended to demonstrate best practices. It can be used to determine if various input modes are causing a Human Interface Device or USB Game Controller are preventing your system from sleeping.
+
+# [patch_libcef.ps1](patch_libcef.ps1)
+A Powershell script to patch `libcef.dll` in the NVIDIA GeForce Experience distribution. It will be updated until NVIDIA fixes the issue.
+
+# Blog: [Fixing a 3+ year old bug in NVIDIA GeForce Experience](https://details-of-note.blogspot.com/2020/12/nvidia-3-year-old-bug.html)
+
+## Background: Joystick Preventing Display Sleep
 
 A few months ago, I thought I ought to try Microsoft Flight Simulator 2020. [The facsimile of our planet](https://www.youtube.com/watch?v=0w7q1ZFfsxs) that Asobo had created with photogrammetry and machine learning seemed like a good place to relax, *["in these trying times."](https://www.powerthesaurus.org/in_these_trying_times/synonyms)* I plugged in my trusty Logitech Freedom 2.4 wireless joystick and took to the skies.
 
