@@ -11,7 +11,9 @@ if($file[$offset] -eq 4 -and $file[$offset+2] -eq 5 -and $file[$offset+4] -eq 8)
 	Stop-Process -Name "NVIDIA GeForce Experience" -ErrorAction SilentlyContinue
 	Stop-Process -Name "NVIDIA Share" -ErrorAction SilentlyContinue
 	[System.IO.File]::WriteAllBytes("$path\libcef.dll.bak", $file)
-	$file[$offset] = 6
+	$file[$offset] = 6    # Replace usage 0x04 (Joystick) with keyboard
+	$file[$offset+2] = 6  # Replace usage 0x05 (Gamepad) with keyboard
+	$file[$offset+4] = 6  # Replace usage 0x08 (Multi-axis Controller) with keyboard
 	[System.IO.File]::WriteAllBytes("$path\libcef.dll", $file)
 } else {
 	Write-Output "Your libcef.dll doesn't seem to match the version this file was tested against."
