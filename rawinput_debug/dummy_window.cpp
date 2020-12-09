@@ -1,12 +1,4 @@
-#include <iostream>
-#include <map>
-
-#include <windows.h>
-
 #include "dummy_window.h"
-#include "device_props.h"
-#include "rawinput.h"
-#include "directinput.h"
 
 HWND CreateDummyWindow() {
 	// Register the window class.

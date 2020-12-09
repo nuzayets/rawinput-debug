@@ -1,19 +1,20 @@
-#include <iostream>
-#include <vector>
-#include <map>
-#include <mutex> 
-
-#include <windows.h>
-
-#include <dinput.h>
-#pragma comment (lib, "dinput8.lib")
-#pragma comment (lib, "dxguid.lib")
-
 #include "directinput.h"
-#include "dummy_window.h"
-#include "timer.h"
 
 IDirectInput8* _dinput = NULL;
+
+struct DIController {
+	LPDIRECTINPUTDEVICE8 dev = NULL;
+	PTP_WAIT ptpWait = NULL;
+	PTP_TIMER ptpTimer = NULL;
+	ULONG count = 0;
+};
+std::map<HANDLE, DIController> event_controller;
+
+struct ControllerStats {
+	DIDEVICEINSTANCE did;
+	ULONG count;
+};
+std::vector<ControllerStats> stats;
 
 IDirectInput8* DInput() {
 	if (!_dinput) InitializeDirectInput();
@@ -37,11 +38,6 @@ BOOL DIEnumPrintDevices(LPCDIDEVICEINSTANCE lpddi, LPVOID pvRef) {
 	std::wcout << "Found DirectInput controller device: " << lpddi->tszProductName << std::endl;
 	return DIENUM_CONTINUE;
 }
-
-
-
-
-std::map<HANDLE, DIController> event_controller;
 
 // handle DirectInput events
 VOID CALLBACK WaitCallback(PTP_CALLBACK_INSTANCE Instance, PVOID Context, PTP_WAIT Wait, TP_WAIT_RESULT WaitResult) {
@@ -82,12 +78,13 @@ LPDIRECTINPUTDEVICE8 ConfigureDevice(LPCDIDEVICEINSTANCE lpddi) {
 	return dev;
 }
 
-
 BOOL DIEnumRegisterEvents(LPCDIDEVICEINSTANCE lpddi, LPVOID pvRef) {
 	LPDIRECTINPUTDEVICE8 dev = ConfigureDevice(lpddi);
 	if (dev) {
 		// Let's handle some events.
 		HANDLE hEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+		if (!hEvent) return DIENUM_STOP;
+
 		HRESULT hr = dev->SetEventNotification(hEvent);
 		if (FAILED(hr)) {
 			if (hr == DI_POLLEDDEVICE) {
@@ -118,6 +115,8 @@ BOOL DIEnumRegisterPolling(LPCDIDEVICEINSTANCE lpddi, LPVOID pvRef) {
 	LPDIRECTINPUTDEVICE8 dev = ConfigureDevice(lpddi);
 	if (dev) {
 		HANDLE hEvent = CreateEvent(NULL, FALSE, FALSE, NULL); // not used for polling, only as identifier...
+		if (!hEvent) return DIENUM_STOP;
+
 		if (FAILED(dev->Acquire())) {
 			std::wcout << "Failed to acquire device: " << lpddi->tszProductName << std::endl;
 			CloseHandle(hEvent);
@@ -131,7 +130,6 @@ BOOL DIEnumRegisterPolling(LPCDIDEVICEINSTANCE lpddi, LPVOID pvRef) {
 	}
 	return DIENUM_CONTINUE;
 }
-
 
 VOID DIRegisterControllerEvents() {
 	if (event_controller.size() > 0) {
@@ -147,13 +145,6 @@ VOID DIRegisterControllerPolling() {
 	EnumerateControllers(DIEnumRegisterPolling);
 }
 
-
-
-struct ControllerStats {
-	DIDEVICEINSTANCE did;
-	ULONG count;
-};
-std::vector<ControllerStats> stats;
 VOID collect_stats() {
 	if (event_controller.size() > 0) {
 		stats.clear();

@@ -1,12 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="dummy_window.cpp" />
-    <ClCompile Include="rawinput.cpp" />
-    <ClCompile Include="timer.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="device_props.cpp" />
-    <ClCompile Include="directinput.cpp" />
+    <ClCompile Include="device_props.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="directinput.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="dummy_window.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="rawinput.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dummy_window.h">
@@ -24,10 +36,27 @@
     <ClInclude Include="directinput.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Headers">
       <UniqueIdentifier>{0f09d0b0-d6ce-4c0f-92b7-d422e2420ef9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Extras">
+      <UniqueIdentifier>{cf8553eb-e598-4bfc-9f30-5fa36cfbf8bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{b7431874-e016-4c96-b082-c4f975287579}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Filter>Extras</Filter>
+    </None>
+    <None Include="..\patch_libcef.ps1">
+      <Filter>Extras</Filter>
+    </None>
   </ItemGroup>
 </Project>

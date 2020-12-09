@@ -1,7 +1,8 @@
 # rawinput-debug
 Win32 console application for demonstrating an issue with raw input and system idle state. 
 
-It's a VS2017 project configured to build against [Windows SDK](https://developer.microsoft.com/en-us/windows/downloads/windows-10-sdk/) `10.0.19041.0` but you can use a different one if you change the target platform in the project settings. 
+- Visual Studio 2019 
+- Windows SDK 10.0
 
 It's quickly thrown together and isn't intended to demonstrate best practices. It can be used to determine if various input modes are causing a Human Interface Device or USB Game Controller to prevent your system from sleeping.
 

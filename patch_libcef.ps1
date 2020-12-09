@@ -1,5 +1,5 @@
 ## Make sure NVIDIA GeForce Experience overlay is disabled before running this script.
-## PowerShell should be started as Administrator.
+## PowerShell must be run as Administrator.
 ## This was tested against GeForce Experience:
 ##  - 3.20.5.70
 ##  - 3.20.5.83

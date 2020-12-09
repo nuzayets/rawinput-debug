@@ -1,11 +1,3 @@
-#include <map>
-#include <windows.h>
-
-#pragma comment (lib, "Cfgmgr32.lib")
-#include <cfgmgr32.h>
-#include <initguid.h> 
-#include <devpkey.h>
-
 #include "device_props.h"
 
 DeviceProperties get_device_props(HANDLE hDevice) {

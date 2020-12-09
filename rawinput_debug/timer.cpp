@@ -1,5 +1,3 @@
-#include <windows.h>
-
 #include "timer.h"
 
 FILETIME _get_ft_for_ms(DWORD delay_ms) {
