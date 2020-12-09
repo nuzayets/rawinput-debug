@@ -17,4 +17,5 @@ if($file[$offset] -eq 4 -and $file[$offset+2] -eq 5 -and $file[$offset+4] -eq 8)
 	[System.IO.File]::WriteAllBytes("$path\libcef.dll", $file)
 } else {
 	Write-Output "Your libcef.dll doesn't seem to match the version this file was tested against."
+	Write-Output "Maybe you want to try https://github.com/nuzayets/rawinput-debug/blob/master/universal_patch_libcef.ps1"
 }

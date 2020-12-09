@@ -166,10 +166,6 @@
     <ClInclude Include="rawinput.h" />
     <ClInclude Include="timer.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\patch_libcef.ps1" />
-    <None Include="..\README.md" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

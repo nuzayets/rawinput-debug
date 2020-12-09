@@ -44,19 +44,8 @@
     <Filter Include="Headers">
       <UniqueIdentifier>{0f09d0b0-d6ce-4c0f-92b7-d422e2420ef9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Extras">
-      <UniqueIdentifier>{cf8553eb-e598-4bfc-9f30-5fa36cfbf8bc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source">
       <UniqueIdentifier>{b7431874-e016-4c96-b082-c4f975287579}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\README.md">
-      <Filter>Extras</Filter>
-    </None>
-    <None Include="..\patch_libcef.ps1">
-      <Filter>Extras</Filter>
-    </None>
   </ItemGroup>
 </Project>
